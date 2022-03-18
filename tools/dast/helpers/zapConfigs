@@ -1,0 +1,6 @@
+script.scripts.name=add-headers
+script.scripts.description=Add headers from json file to every request
+script.scripts.engine=jython
+script.scripts.type=httpsender
+script.scripts.enabled=true
+script.scripts.file=/zap/helpers/scripts/httpsender/add-headers.py
