@@ -18,7 +18,7 @@ type Settings struct {
 }
 
 var cmdAll = &cobra.Command{
-	Use:   "all (--output [yaml|json]) (--filename name)",
+	Use:   "all (--format [yaml|json]) (--o Path)",
 	Short: "Generate all config settings",
 	Long:  `Generate all config settings and output to a file for later use`,
 	Run: func(cmd *cobra.Command, args []string) {
