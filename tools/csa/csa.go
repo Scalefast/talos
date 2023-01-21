@@ -10,8 +10,8 @@ import (
 	"github.com/docker/docker/pkg/jsonmessage"
 	"github.com/docker/docker/pkg/stdcopy"
 	"github.com/moby/term"
-	"github.com/spf13/viper"
 	"github.com/scalefast/talos/logger"
+	"github.com/spf13/viper"
 )
 
 // Analyze serves as the csa tool entrypoint
@@ -21,7 +21,7 @@ import (
 // logger provides a interface to log messages into a default error
 // This method does not return anything because the program finishes
 // when this method does, so it has to be autocontained
-func Analyze(c *viper.Viper, l *logger.StandardLogger) {
+func Analyze(c *viper.Viper, l *logger.StandardLogger, user string, network string, output string) {
 
 	ctx2 := context.Background()
 	cli, err := client.NewClientWithOpts(client.FromEnv, client.WithAPIVersionNegotiation())
@@ -49,11 +49,12 @@ func Analyze(c *viper.Viper, l *logger.StandardLogger) {
 	//docker run -u root -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy:latest testimage:latest (Command that really is executed)
 	resp, err := cli.ContainerCreate(ctx2, &container.Config{
 		Image: "aquasec/trivy:latest",
-		User:  "root",
+		User:  user,
 		Cmd:   []string{"image", image},
 		Tty:   false,
 	}, &container.HostConfig{
-		Binds: []string{"/var/run/docker.sock:/var/run/docker.sock"},
+		Binds:       []string{"/var/run/docker.sock:/var/run/docker.sock"},
+		NetworkMode: container.NetworkMode(network),
 	}, nil, nil, "")
 	if err != nil {
 		panic(err)
@@ -77,7 +78,7 @@ func Analyze(c *viper.Viper, l *logger.StandardLogger) {
 		panic(err)
 	}
 
-	f, err := os.Create("report.txt")
+	f, err := os.Create(output)
 	if err != nil {
 		l.ECustom("Error, could not create the file")
 		panic(err)
