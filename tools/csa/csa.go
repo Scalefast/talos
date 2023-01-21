@@ -83,7 +83,7 @@ func Analyze(c *viper.Viper, l *logger.StandardLogger, user string, network stri
 		l.ECustom("Error, could not create the file")
 		panic(err)
 	}
-	l.ICustom("Report saved to file report.txt")
+	l.ICustom("Report saved successfully")
 	stdcopy.StdCopy(f, os.Stderr, out)
 	defer f.Close()
 }

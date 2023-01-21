@@ -1,8 +1,8 @@
 package commands
 
 import (
-	"github.com/spf13/cobra"
 	logger "github.com/scalefast/talos/logger"
+	"github.com/spf13/cobra"
 )
 
 // Base command to RUN.
