@@ -6,22 +6,19 @@ import (
 
 	"encoding/json"
 
+	"github.com/scalefast/talos/tools/csa"
 	"github.com/scalefast/talos/tools/dast"
 	"github.com/spf13/cobra"
 	"gopkg.in/yaml.v2"
 )
 
 type Settings struct {
-	Csa  CSA           `json:"csa" yaml:"CSA"`
+	Csa  csa.Settings  `json:"csa" yaml:"CSA"`
 	Dast dast.Settings `json:"dast" yaml:"DAST"`
 }
 
-type CSA struct {
-	Image string `json:"image" yaml:"Image"`
-}
-
 var cmdAll = &cobra.Command{
-	Use:   "all (--output [yaml|json])",
+	Use:   "all (--output [yaml|json]) (--filename name)",
 	Short: "Generate all config settings",
 	Long:  `Generate all config settings and output to a file for later use`,
 	Run: func(cmd *cobra.Command, args []string) {
@@ -50,6 +47,9 @@ var cmdAll = &cobra.Command{
 		} else {
 			fmt.Print("Filetype not supported. Must be yaml or json")
 		}
-		os.WriteFile("config.yaml", data, 0666)
+		err := os.WriteFile(filename, data, 0644)
+		if err != nil {
+			fmt.Printf("Error generating the file %v", err)
+		}
 	},
 }
