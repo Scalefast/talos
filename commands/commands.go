@@ -4,16 +4,23 @@ import (
 	"github.com/spf13/cobra"
 )
 
-//Config file. Declare type
+// Config file. Declare type
 var filename string
 var filetype string
+var network string
+var user string
+var output string
 
 // Gets called with the version we want to have,
 // Now we want to print the version if it is required.
 func Execute(version string) {
 	cmdDAST.Flags().StringVarP(&filename, "config", "c", "config.yaml", "Config file location, relative to binary") // What handler handles file types in cobra?
 	cmdCSA.Flags().StringVarP(&filename, "config", "c", "config.yaml", "Config file location, relative to binary")  // What handler handles file types in cobra?
+	cmdCSA.Flags().StringVarP(&network, "network", "n", "none", "Network to connect the container")
+	cmdCSA.Flags().StringVarP(&user, "user", "u", "root", "Username or UID to execute the container")
+	cmdCSA.Flags().StringVarP(&output, "filename", "f", "", "Path to store the analysis result")
 	cmdAll.Flags().StringVarP(&filetype, "format", "f", "yaml", "Config file format")
+	cmdAll.Flags().StringVarP(&filename, "output", "o", "", "Path to store the Config")
 
 	// Execute sets-up the run command, so that any security analysis tools can be
 	// added after it.
