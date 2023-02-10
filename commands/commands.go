@@ -18,9 +18,9 @@ func Execute(version string) {
 	cmdCSA.Flags().StringVarP(&filename, "config", "c", "config.yaml", "Config file location, relative to binary")  // What handler handles file types in cobra?
 	cmdCSA.Flags().StringVarP(&network, "network", "n", "none", "Network to connect the container")
 	cmdCSA.Flags().StringVarP(&user, "user", "u", "root", "Username or UID to execute the container")
-	cmdCSA.Flags().StringVarP(&output, "filename", "f", "", "Path to store the analysis result")
+	cmdCSA.Flags().StringVarP(&output, "output", "o", "", "Path to store the analysis result")
 	cmdAll.Flags().StringVarP(&filetype, "format", "f", "yaml", "Config file format")
-	cmdAll.Flags().StringVarP(&filename, "output", "o", "", "Path to store the Config")
+	cmdAll.Flags().StringVarP(&filename, "config", "c", "config.yaml", "Path to store the Config")
 
 	// Execute sets-up the run command, so that any security analysis tools can be
 	// added after it.
