@@ -3,10 +3,10 @@ package commands
 import (
 	"os"
 
-	"github.com/spf13/cobra"
 	cfg "github.com/scalefast/talos/config"
 	logger "github.com/scalefast/talos/logger"
 	"github.com/scalefast/talos/tools/csa"
+	"github.com/spf13/cobra"
 )
 
 // cmdCSA is a global variable that contains the information needed for cobra to
@@ -28,6 +28,6 @@ var cmdCSA = &cobra.Command{
 		}
 		// Send the control, (along with the config, and logger) // Sergio's comment
 		// To the analyzer // Sergio's comment
-		csa.Analyze(c, l)
+		csa.Analyze(c, l, user, network, output)
 	},
 }
